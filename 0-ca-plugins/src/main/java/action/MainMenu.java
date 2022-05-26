@@ -1,8 +1,14 @@
 package action;
 
+import app.MinigolfApplication;
+
 import java.util.LinkedHashMap;
 
 public class MainMenu extends AbstractMenu {
+
+    public MainMenu(MinigolfApplication app) {
+        super(app);
+    }
 
     @Override
     public void show() {
@@ -13,7 +19,7 @@ public class MainMenu extends AbstractMenu {
     @Override
     public LinkedHashMap<String, IAction> getMenuItems() {
         return new LinkedHashMap<>(){{
-            put("Play Game", new StartGameMenu());
+            put("Play Game", new StartGameMenu(app));
             put("Exit", new ExitApplicationAction());
         }};
     }

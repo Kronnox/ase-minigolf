@@ -4,6 +4,7 @@ import model.Track;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TrackRepository implements ITrackRepository{
@@ -16,12 +17,12 @@ public class TrackRepository implements ITrackRepository{
     }};
 
     @Override
-    public List<Track> findAllTracks() {
+    public List<Track> findAll() {
         return tracks;
     }
 
     @Override
-    public Track findTrackById(UUID id) {
-        return tracks.stream().filter(c -> c.getId().equals(id)).findAny().orElse(null);
+    public Optional<Track> findById(UUID id) {
+        return tracks.stream().filter(c -> c.getId().equals(id)).findAny();
     }
 }

@@ -3,11 +3,12 @@ package repository;
 import model.Track;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ITrackRepository {
 
-    List<Track> findAllTracks();
+    List<Track> findAll();
 
-    Track findTrackById(UUID id);
+    Optional<Track> findById(UUID id);
 }

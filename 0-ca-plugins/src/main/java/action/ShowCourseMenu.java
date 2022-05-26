@@ -1,5 +1,6 @@
 package action;
 
+import app.MinigolfApplication;
 import model.Course;
 import repository.CourseRepository;
 
@@ -10,8 +11,9 @@ public class ShowCourseMenu extends AbstractMenu {
 
     private final Course course;
 
-    public ShowCourseMenu(UUID courseId) {
-        this.course = new CourseRepository().findCourseById(courseId);
+    public ShowCourseMenu(MinigolfApplication app, UUID courseId) {
+        super(app);
+        this.course = new CourseRepository().findById(courseId).orElseThrow();
     }
 
     @Override
@@ -24,8 +26,8 @@ public class ShowCourseMenu extends AbstractMenu {
     @Override
     public LinkedHashMap<String, IAction> getMenuItems() {
         return new LinkedHashMap<>(){{
-            put("Play Course", new ExitApplicationAction());
-            put("Back", new StartGameMenu());
+            put("Play Course", new PlayerMenu(app));
+            put("Back", new StartGameMenu(app));
         }};
     }
 }

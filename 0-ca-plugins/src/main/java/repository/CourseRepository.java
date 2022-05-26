@@ -4,6 +4,7 @@ import model.Course;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class CourseRepository implements ICourseRepository{
@@ -16,12 +17,12 @@ public class CourseRepository implements ICourseRepository{
     }};
 
     @Override
-    public List<Course> findAllCourses() {
+    public List<Course> findAll() {
         return courses;
     }
 
     @Override
-    public Course findCourseById(UUID id) {
-        return courses.stream().filter(c -> c.getId().equals(id)).findAny().orElse(null);
+    public Optional<Course> findById(UUID id) {
+        return courses.stream().filter(c -> c.getId().equals(id)).findAny();
     }
 }

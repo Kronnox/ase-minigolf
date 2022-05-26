@@ -1,9 +1,16 @@
 package action;
 
+import app.MinigolfApplication;
+
 import java.util.*;
 
 public abstract class AbstractMenu implements IAction {
 
+    protected final MinigolfApplication app;
+
+    public AbstractMenu(MinigolfApplication app) {
+        this.app = app;
+    }
     @Override
     public void execute() {
         System.out.println();
