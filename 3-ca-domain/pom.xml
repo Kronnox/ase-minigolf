@@ -2,18 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ase-minigolf</artifactId>
+        <groupId>de.lucaadams</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.lucaadams</groupId>
-    <artifactId>ase-minigolf</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>0-ca-plugins</module>
-        <module>1-ca-adapters</module>
-        <module>2-ca-application</module>
-        <module>3-ca-domain</module>
-    </modules>
+    <artifactId>ase-minigolf-domain</artifactId>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
