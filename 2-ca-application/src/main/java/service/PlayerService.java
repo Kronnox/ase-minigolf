@@ -3,8 +3,10 @@ package service;
 import exception.InvalidPlayernameException;
 import model.Player;
 import model.Playername;
+import model.Score;
 import repository.IPlayerRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +33,10 @@ public class PlayerService {
         return getAll().get(0);
     }
 
+    public boolean isFirst(Player player) {
+        return getAll().indexOf(player) == 0;
+    }
+
     public Player getPlayerFollowing(Player player) {
         int i = getAll().indexOf(player);
         if (i == -1) {
@@ -46,5 +52,14 @@ public class PlayerService {
         Playername playername = new Playername(name);
         Player player = new Player(playername);
         playerRepository.save(player);
+    }
+
+    public int getMaximumPlayernameLength() {
+        return getAll().stream()
+                .map(Player::getName)
+                .map(Playername::toString)
+                .max(Comparator.comparingInt(String::length))
+                .orElse("")
+                .length();
     }
 }
