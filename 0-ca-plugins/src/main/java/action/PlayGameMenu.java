@@ -1,6 +1,7 @@
 package action;
 
 import app.MinigolfApplication;
+import model.Player;
 import model.Score;
 
 import java.util.LinkedHashMap;
@@ -14,21 +15,24 @@ public class PlayGameMenu extends AbstractMenu {
 
     @Override
     public void show() {
-        app.getPlayerService().getAll().forEach(player -> {
-            String scores = app.getScoreService().getAllForPlayer(player.getId()).stream()
-                            .map(Score::toString).collect(Collectors.joining(" "));
-            int totalScore = app.getScoreService().getTotalForPlayer(player.getId());
-
-            int nameColumnWidth = app.getPlayerService().getMaximumPlayernameLength();
-            int scoreColumnWith = Math.max(1, app.getSession().getCurrentCourse().getTracks().size()*2-1);
-            String format = "%-"+nameColumnWidth+"s | %-"+scoreColumnWith+"s | %s%n";
-            System.out.format(format, player.getName(), scores, totalScore);
-        });
-
-        if (isGameFinished()) {
-            return;
+        app.getPlayerService().getAll().forEach(this::printLeaderboardRow);
+        if (!isGameFinished()) {
+            printTurnInfo();
         }
+    }
 
+    private void printLeaderboardRow(Player player) {
+        String scores = app.getScoreService().getAllForPlayer(player.getId()).stream()
+                .map(Score::toString).collect(Collectors.joining(" "));
+        int totalScore = app.getScoreService().getTotalForPlayer(player.getId());
+
+        int nameColumnWidth = app.getPlayerService().getMaximumPlayernameLength();
+        int scoreColumnWith = Math.max(1, app.getSession().getCurrentCourse().getTracks().size()*2-1);
+        String format = "%-"+nameColumnWidth+"s | %-"+scoreColumnWith+"s | %s%n";
+        System.out.format(format, player.getName(), scores, totalScore);
+    }
+
+    private void printTurnInfo() {
         System.out.println("-----------------------------------------------"); // divider
         System.out.printf(
                 "Playing: %s | Hole %s | Stroke %s / %s\n",
@@ -36,7 +40,7 @@ public class PlayGameMenu extends AbstractMenu {
                 app.getSession().getCurrentTrackIndex(),
                 app.getSession().getCurrentScore(),
                 app.getSession().getCurrentCourse().getMaxStrokes()
-                );
+        );
     }
 
     @Override
