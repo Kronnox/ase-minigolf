@@ -1,8 +1,16 @@
 package action;
 
+import repository.CourseRepository;
+
 import java.util.LinkedHashMap;
 
 public class StartGameMenu extends AbstractMenu {
+
+    private final CourseRepository courseRepository;
+
+    public StartGameMenu() {
+        this.courseRepository = new CourseRepository();
+    }
 
     @Override
     public void show() {
@@ -11,6 +19,12 @@ public class StartGameMenu extends AbstractMenu {
 
     @Override
     public LinkedHashMap<String, IAction> getMenuItems() {
-        return new LinkedHashMap<>();
+        LinkedHashMap<String, IAction> courseMenus = new LinkedHashMap<>();
+
+        courseRepository.findAllCourses().forEach(
+                course -> courseMenus.put(course.getName(), new ShowCourseMenu(course.getId()))
+        );
+
+        return courseMenus;
     }
 }

@@ -6,6 +6,7 @@ public abstract class AbstractMenu implements IAction {
 
     @Override
     public void execute() {
+        System.out.println();
         System.out.println("-----------------------------------------------"); // divider
         show();
         System.out.println("-----------------------------------------------"); // divider
