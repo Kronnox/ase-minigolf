@@ -27,7 +27,7 @@ public class PlayerMenu extends AbstractMenu {
     public LinkedHashMap<String, IAction> getMenuItems() {
         return new LinkedHashMap<>(){{
             put("Add Player", new AddPlayerAction(app));
-            put("Continue", new ExitApplicationAction());
+            put("Start Game", new PlayGameMenu(app));
         }};
     }
 }

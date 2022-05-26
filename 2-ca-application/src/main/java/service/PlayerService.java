@@ -24,6 +24,24 @@ public class PlayerService {
         return playerRepository.findById(id).orElse(null);
     }
 
+    public Player getFirst() {
+        if (getAll().size() == 0) {
+            return null;
+        }
+        return getAll().get(0);
+    }
+
+    public Player getPlayerFollowing(Player player) {
+        int i = getAll().indexOf(player);
+        if (i == -1) {
+            throw new IllegalArgumentException("Player not found in repository");
+        }
+
+        i = i+1 >= getAll().size() ? 0 : i+1;
+
+        return getAll().get(i);
+    }
+
     public void createPlayer(String name) throws InvalidPlayernameException {
         Playername playername = new Playername(name);
         Player player = new Player(playername);

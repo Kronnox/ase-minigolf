@@ -26,7 +26,7 @@ public class ShowCourseMenu extends AbstractMenu {
     @Override
     public LinkedHashMap<String, IAction> getMenuItems() {
         return new LinkedHashMap<>(){{
-            put("Play Course", new PlayerMenu(app));
+            put("Play Course", new SelectCourseAction(app, course.getId()));
             put("Back", new StartGameMenu(app));
         }};
     }
