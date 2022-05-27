@@ -59,6 +59,6 @@ public class PlayGameMenu extends AbstractMenu {
     }
 
     private boolean isGameFinished() {
-        return false; // TODO: app.getSession().getCurrentTrackIndex() >= app.getSession().getCurrentCourse().getTracks().size()
+        return app.getSession().getCurrentTrackIndex() >= app.getSession().getCurrentCourse().getTracks().size();
     }
 }

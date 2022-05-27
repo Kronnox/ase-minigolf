@@ -9,13 +9,12 @@ public class Course {
     private final UUID id;
     private final String name;
     private final StrokeCount maxStrokes;
-    private final List<Track> tracks;
+    private final List<Track> tracks = new ArrayList<>();
 
     public Course(String id, String name, int maxStrokes) {
         this.id = UUID.fromString(id);
         this.name = name;
         this.maxStrokes = new StrokeCount(maxStrokes);
-        tracks = new ArrayList<>(); //ToDo: Track
     }
 
     public UUID getId() {
@@ -32,6 +31,10 @@ public class Course {
 
     public List<Track> getTracks() {
         return tracks;
+    }
+
+    public void addTrack(Track track) {
+        this.tracks.add(track);
     }
 
     public Track getTrack(int index) {

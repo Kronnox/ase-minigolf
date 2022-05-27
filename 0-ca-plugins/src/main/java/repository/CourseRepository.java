@@ -1,7 +1,11 @@
 package repository;
 
+import file.CsvReader;
 import model.Course;
+import model.StrokeCount;
+import model.Track;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,12 +13,36 @@ import java.util.UUID;
 
 public class CourseRepository implements ICourseRepository{
 
-    List<Course> courses = new ArrayList<>(){{
-        add(new Course("7da8e2d3-7932-4821-9749-e39404214e95", "TestCourse 1", 4));
-        add(new Course("7b2970cb-0fe1-4c12-885f-51d6ca305a61", "TestCourse 2", 5));
-        add(new Course("16848460-b80b-4ec9-a2d5-cf831a6cd8f4", "TestCourse 3", 4));
-        add(new Course("7b1cd5b6-c5da-4be4-843a-4b64892aabb1", "TestCourse 4", 6));
-    }};
+    private final String COURSE_FILE_PATH = "courses.csv";
+    private final List<Course> courses = new ArrayList<>();
+
+    private final ITrackRepository trackRepository = new TrackRepository();
+
+    public CourseRepository() {
+        List<String[]> fileContent;
+        try {
+            fileContent = CsvReader.read(COURSE_FILE_PATH, "; ");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        fileContent.forEach(line -> {
+            Course course = new Course(line[0], line[1], Integer.parseInt(line[2]));
+
+            // Add tracks
+            for (int i = 3; i < line.length; i++) {
+                Optional<Track> track = trackRepository.findById(UUID.fromString(line[i]));
+                if (track.isEmpty()) {
+                    System.out.printf("Track '%s' could not be found.\n", line[i]);
+                    continue;
+                }
+                course.addTrack(track.get());
+            }
+
+            courses.add(course);
+        });
+    }
 
     @Override
     public List<Course> findAll() {
