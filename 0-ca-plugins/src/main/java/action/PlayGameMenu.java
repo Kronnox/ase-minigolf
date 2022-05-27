@@ -1,13 +1,9 @@
 package action;
 
 import app.MinigolfApplication;
-import model.*;
+import leaderboard.Leaderboard;
 
-import java.awt.*;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PlayGameMenu extends AbstractMenu {
 
@@ -17,35 +13,10 @@ public class PlayGameMenu extends AbstractMenu {
 
     @Override
     public void show() {
-        printLeaderboardRow(app.getSession().getCurrentCourse());
-        app.getPlayerService().getAll().forEach(this::printLeaderboardRow);
+        new Leaderboard(app).print();
         if (!isGameFinished()) {
             printTurnInfo();
         }
-    }
-
-    private void printLeaderboardRow(Course course) {
-        printLeaderboardRow(
-                "(Par)",
-                course.getTracks().stream().map(Track::getPar).map(StrokeCount::toInt).toList(),
-                course.getTracks().stream().map(Track::getPar).mapToInt(StrokeCount::toInt).sum()
-        );
-    }
-
-    private void printLeaderboardRow(Player player) {
-        printLeaderboardRow(
-                player.getName().toString(),
-                app.getScoreService().getAllForPlayer(player.getId()).stream().map(Score::toInt).toList(),
-                app.getScoreService().getTotalForPlayer(player.getId())
-        );
-    }
-    private void printLeaderboardRow(String label, List<Integer> scores, int totalScore) {
-        String scoreString = scores.stream().map(i -> Integer.toString(i)).collect(Collectors.joining(" "));
-
-        int nameColumnWidth = Math.max(5, app.getPlayerService().getMaximumPlayernameLength());
-        int scoreColumnWith = Math.max(1, app.getSession().getCurrentCourse().getTracks().size()*2-1);
-        String format = "%-"+nameColumnWidth+"s | %-"+scoreColumnWith+"s | %s%n";
-        System.out.format(format, label, scoreString, totalScore);
     }
 
     private void printTurnInfo() {
