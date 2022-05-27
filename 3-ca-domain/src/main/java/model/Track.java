@@ -5,18 +5,18 @@ import java.util.UUID;
 public class Track {
 
     private final UUID id;
-    private final int par;
+    private final StrokeCount par;
 
-    public Track(UUID id, int par) {
-        this.id = id;
-        this.par = par;
+    public Track(String id, int par) {
+        this.id = UUID.fromString(id);
+        this.par = new StrokeCount(par);
     }
 
     public UUID getId() {
         return id;
     }
 
-    public int getPar() {
+    public StrokeCount getPar() {
         return par;
     }
 

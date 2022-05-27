@@ -1,61 +1,63 @@
 package model;
 
+import java.util.Objects;
+
 public class Score {
 
-    private final int max;
-    private int value;
+    private final StrokeCount maxScore;
+    private StrokeCount score;
 
     /**
-     * Value object to store the current score
-     * @param max the maximum amount of allowed strokes
+     * Aggregate to store a count of strokes and maximum allowed strokes
+     * @param maxScore the maximum amount of allowed strokes
      */
-    public Score(int max) {
-        if (max < 1) {
+    public Score(StrokeCount maxScore) {
+        if (maxScore.toInt() < 1) {
             throw new IllegalArgumentException("The maximum score has to be at least 1");
         }
         int limit = Integer.MAX_VALUE-2;
-        if (max > limit) {
+        if (maxScore.toInt() > limit) {
             throw new IllegalArgumentException("The maximum score cannot be greater than "+limit);
         }
-        this.max = max;
-        this.value = 1;
+        this.maxScore = maxScore;
+        this.score = new StrokeCount(1);
     }
 
     /**
      * Get value
-     * @return score as int
+     * @return stroke count as int
      */
     public int toInt() {
-        return value;
+        return score.toInt();
     }
 
     /**
      * Get value as String
-     * @return score as String
+     * @return stroke count as String
      */
     @Override
     public String toString() {
-        return Integer.toString(value);
+        return score.toString();
     }
 
     /**
-     * Increments the score. In case it reaches the maximum add two to the score
+     * Increments the stroke count. In case it reaches the maximum add two
      * @return true if reached the maximum
      */
     public boolean increment() {
-        if (value >= max) {
+        if (score.toInt() >= maxScore.toInt()) {
             setToMax();
             return true;
         }
-        value++;
+        score = new StrokeCount(score.toInt()+1);
         return false;
     }
 
     /**
-     * Sets the score to it's maximum value plus two
+     * Sets the stroke count to it's maximum value plus two
      */
     public void setToMax() {
-        value = max + 2;
+        score = new StrokeCount(maxScore.toInt()+2);
     }
 
     @Override
@@ -63,16 +65,16 @@ public class Score {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Score score = (Score) o;
+        Score score1 = (Score) o;
 
-        if (max != score.max) return false;
-        return value == score.value;
+        if (!Objects.equals(maxScore, score1.maxScore)) return false;
+        return Objects.equals(score, score1.score);
     }
 
     @Override
     public int hashCode() {
-        int result = max;
-        result = 31 * result + value;
+        int result = maxScore != null ? maxScore.hashCode() : 0;
+        result = 31 * result + (score != null ? score.hashCode() : 0);
         return result;
     }
 }

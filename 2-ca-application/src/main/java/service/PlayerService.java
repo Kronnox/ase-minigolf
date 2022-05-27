@@ -3,7 +3,6 @@ package service;
 import exception.InvalidPlayernameException;
 import model.Player;
 import model.Playername;
-import model.Score;
 import repository.IPlayerRepository;
 
 import java.util.Comparator;

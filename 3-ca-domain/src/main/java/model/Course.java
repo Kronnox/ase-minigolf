@@ -8,13 +8,13 @@ public class Course {
 
     private final UUID id;
     private final String name;
-    private final int maxStrokes;
+    private final StrokeCount maxStrokes;
     private final List<Track> tracks;
 
-    public Course(UUID id, String name, int maxStrokes) {
-        this.id = id;
+    public Course(String id, String name, int maxStrokes) {
+        this.id = UUID.fromString(id);
         this.name = name;
-        this.maxStrokes = maxStrokes;
+        this.maxStrokes = new StrokeCount(maxStrokes);
         tracks = new ArrayList<>(); //ToDo: Track
     }
 
@@ -26,7 +26,7 @@ public class Course {
         return name;
     }
 
-    public int getMaxStrokes() {
+    public StrokeCount getMaxStrokes() {
         return maxStrokes;
     }
 

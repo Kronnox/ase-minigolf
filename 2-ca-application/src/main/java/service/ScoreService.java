@@ -1,6 +1,5 @@
 package service;
 
-import model.Player;
 import model.Score;
 import repository.IScoreRepository;
 
