@@ -5,7 +5,6 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Leaderboard {
 
@@ -62,7 +61,6 @@ public class Leaderboard {
         List<Object> parameters = new ArrayList<>();
 
         // Label section
-        int nameColumnWidth = Math.max(5, app.getPlayerService().getMaximumPlayernameLength());
         parameters.add(label);
 
         // Score section
