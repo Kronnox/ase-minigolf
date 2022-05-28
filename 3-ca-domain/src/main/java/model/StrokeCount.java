@@ -1,6 +1,6 @@
 package model;
 
-public class StrokeCount {
+public final class StrokeCount {
 
     private final int value;
 

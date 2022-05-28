@@ -4,7 +4,7 @@ import exception.InvalidPlayernameException;
 
 import java.util.Objects;
 
-public class Playername {
+public final class Playername {
 
     private final String value;
 
