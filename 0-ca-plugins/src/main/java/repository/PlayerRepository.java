@@ -2,25 +2,22 @@ package repository;
 
 import model.Player;
 import model.Playername;
+import storage.GenericStorage;
+import storage.StorageManager;
 
 import java.util.*;
 
 public class PlayerRepository implements IPlayerRepository {
 
-    private final List<Player> players;
-
-    public PlayerRepository() {
-        this.players = new ArrayList<>();
-    }
-
+    private final GenericStorage<Player> players = StorageManager.getPlayerStorage();
     @Override
     public List<Player> findAll() {
-        return players;
+        return players.retrieve();
     }
 
     @Override
     public void save(Player player) {
-        players.add(player);
+        players.store(player);
     }
 
     @Override

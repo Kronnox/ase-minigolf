@@ -5,7 +5,6 @@ import model.Player;
 import model.Playername;
 import repository.IPlayerRepository;
 
-import java.util.Comparator;
 import java.util.List;
 
 public class PlayerService {
@@ -16,30 +15,26 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    public List<Player> getAll() {
-        return playerRepository.findAll();
-    }
-
     public Player getFirst() {
-        if (getAll().size() == 0) {
+        if (playerRepository.findAll().size() == 0) {
             return null;
         }
-        return getAll().get(0);
+        return playerRepository.findAll().get(0);
     }
 
     public boolean isFirst(Player player) {
-        return getAll().indexOf(player) == 0;
+        return playerRepository.findAll().indexOf(player) == 0;
     }
 
     public Player getPlayerFollowing(Player player) {
-        int i = getAll().indexOf(player);
+        int i = playerRepository.findAll().indexOf(player);
         if (i == -1) {
             throw new IllegalArgumentException("Player not found in repository");
         }
 
-        i = i+1 >= getAll().size() ? 0 : i+1;
+        i = i+1 >= playerRepository.findAll().size() ? 0 : i+1;
 
-        return getAll().get(i);
+        return playerRepository.findAll().get(i);
     }
 
     public void createPlayer(String name) throws InvalidPlayernameException {

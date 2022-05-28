@@ -2,6 +2,7 @@ package action;
 
 import app.MinigolfApplication;
 import model.Player;
+import repository.PlayerRepository;
 import service.PlayerService;
 
 import java.util.LinkedHashMap;
@@ -17,7 +18,7 @@ public class PlayerMenu extends AbstractMenu {
     public void show() {
         System.out.println("Current players:");
 
-        String playersAsString = app.getPlayerService().getAll().stream()
+        String playersAsString = new PlayerRepository().findAll().stream()
                 .map(p -> p.getName().toString())
                 .collect(Collectors.joining(", "));
         System.out.println(playersAsString.isBlank() ? "(None)" : playersAsString);

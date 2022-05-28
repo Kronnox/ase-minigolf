@@ -44,7 +44,7 @@ public class SessionManager {
     }
 
     public void goToNextPlayer() {
-        scoreService.addToPlayer(currentPlayer.getId(), currentScore);
+        scoreService.addToPlayer(currentPlayer, currentScore);
 
         currentPlayer = playerService.getPlayerFollowing(currentPlayer);
         if (playerService.isFirst(currentPlayer)) {

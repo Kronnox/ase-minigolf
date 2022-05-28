@@ -1,24 +1,38 @@
 package service;
 
+import model.Player;
+import model.PlayerScoreAggregate;
 import model.Score;
-import repository.IScoreRepository;
+import repository.IPlayerScoreRepository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 public class ScoreService {
 
-    private final IScoreRepository scoreRepository;
+    private final IPlayerScoreRepository scoreRepository;
 
-    public ScoreService(IScoreRepository scoreRepository) {
+    public ScoreService(IPlayerScoreRepository scoreRepository) {
         this.scoreRepository = scoreRepository;
     }
 
-    public List<Score> getAllForPlayer(UUID playerId) {
-        return scoreRepository.findAllForPlayer(playerId);
+    public List<Score> getAllForPlayer(Player player) {
+        Optional<PlayerScoreAggregate> optionalScore = scoreRepository.findByPlayer(player);
+        if (optionalScore.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return optionalScore.get().getScores();
     }
 
-    public void addToPlayer(UUID playerId, Score score) {
-        scoreRepository.addToPlayer(playerId, score);
+    public void addToPlayer(Player player, Score score) {
+        Optional<PlayerScoreAggregate> optionalScore = scoreRepository.findByPlayer(player);
+        if (optionalScore.isEmpty()) {
+            PlayerScoreAggregate playerScore = new PlayerScoreAggregate(player);
+            playerScore.addScore(score);
+            scoreRepository.save(playerScore);
+            return;
+        }
+        optionalScore.get().addScore(score);
     }
 }

@@ -3,7 +3,7 @@ package app;
 import action.MainMenu;
 import manager.SessionManager;
 import repository.PlayerRepository;
-import repository.ScoreRepository;
+import repository.PlayerScoreRepository;
 import service.PlayerService;
 import service.ScoreService;
 
@@ -16,7 +16,7 @@ public class MinigolfApplication {
 
     public MinigolfApplication() {
         playerService = new PlayerService(new PlayerRepository());
-        scoreService = new ScoreService((new ScoreRepository()));
+        scoreService = new ScoreService((new PlayerScoreRepository()));
 
         session = new SessionManager(playerService, scoreService);
 

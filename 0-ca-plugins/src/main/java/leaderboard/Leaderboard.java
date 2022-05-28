@@ -2,6 +2,7 @@ package leaderboard;
 
 import app.MinigolfApplication;
 import model.*;
+import repository.PlayerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Leaderboard {
 
     public void print() {
         printLeaderboardRow(app.getSession().getCurrentCourse());
-        app.getPlayerService().getAll().forEach(this::printLeaderboardRow);
+        new PlayerRepository().findAll().forEach(this::printLeaderboardRow);
     }
 
     private void printLeaderboardRow(Course course) {
@@ -54,7 +55,7 @@ public class Leaderboard {
     private void printLeaderboardRow(Player player) {
         printLeaderboardRow(
                 player.getName().toString(),
-                app.getScoreService().getAllForPlayer(player.getId()).stream().map(Score::toInt).toList()
+                app.getScoreService().getAllForPlayer(player).stream().map(Score::toInt).toList()
         );
     }
     private void printLeaderboardRow(String label, List<Integer> scores) {
