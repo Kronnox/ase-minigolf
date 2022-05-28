@@ -49,11 +49,6 @@ public class PlayerService {
     }
 
     public int getMaximumPlayernameLength() {
-        return getAll().stream()
-                .map(Player::getName)
-                .map(Playername::toString)
-                .max(Comparator.comparingInt(String::length))
-                .orElse("")
-                .length();
+        return playerRepository.getMaximumPlayernameLength();
     }
 }

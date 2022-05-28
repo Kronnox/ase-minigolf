@@ -12,4 +12,6 @@ public interface IPlayerRepository {
     List<Player> findAll();
 
     void save(Player player);
+
+    int getMaximumPlayernameLength();
 }

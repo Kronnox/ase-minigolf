@@ -1,11 +1,9 @@
 package repository;
 
 import model.Player;
+import model.Playername;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerRepository implements IPlayerRepository {
 
@@ -23,5 +21,15 @@ public class PlayerRepository implements IPlayerRepository {
     @Override
     public void save(Player player) {
         players.add(player);
+    }
+
+    @Override
+    public int getMaximumPlayernameLength() {
+        return findAll().stream()
+                .map(Player::getName)
+                .map(Playername::toString)
+                .max(Comparator.comparingInt(String::length))
+                .orElse("")
+                .length();
     }
 }
