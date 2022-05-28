@@ -46,37 +46,23 @@ public class Leaderboard {
     }
 
     private void printLeaderboardRow(Course course) {
-        List<Integer> scores = course.getTracks().stream().map(Track::getPar).map(StrokeCount::toInt).toList();
-        List<Object> parameters = new ArrayList<>();
-
-        // Label section
-        parameters.add("(Par)");
-
-        // Score section
-        int totalScore = 0;
-        for (int i = 0; i < app.getSession().getCurrentCourse().getTracks().size(); i++) {
-            if (i >= scores.size()) {
-                parameters.add("-");
-                continue;
-            }
-            int score = scores.get(i);
-            parameters.add(score);
-            totalScore += score;
-        }
-
-        // Total score section
-        parameters.add(totalScore);
-
-        // Final print out
-        System.out.format(format, parameters.toArray());
+        printLeaderboardRow(
+                "(Par)",
+                course.getTracks().stream().map(Track::getPar).map(StrokeCount::toInt).toList()
+        );
     }
 
     private void printLeaderboardRow(Player player) {
-        List<Integer> scores =app.getScoreService().getAllForPlayer(player).stream().map(Score::toInt).toList();
+        printLeaderboardRow(
+                player.getName().toString(),
+                app.getScoreService().getAllForPlayer(player).stream().map(Score::toInt).toList()
+        );
+    }
+    private void printLeaderboardRow(String label, List<Integer> scores) {
         List<Object> parameters = new ArrayList<>();
 
         // Label section
-        parameters.add(player.getName().toString());
+        parameters.add(label);
 
         // Score section
         int totalScore = 0;
