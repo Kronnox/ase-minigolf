@@ -11,7 +11,5 @@ public interface IPlayerRepository {
 
     List<Player> findAll();
 
-    Optional<Player> findById(UUID id);
-
     void save(Player player);
 }

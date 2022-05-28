@@ -7,7 +7,6 @@ import repository.IPlayerRepository;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 public class PlayerService {
 
@@ -19,10 +18,6 @@ public class PlayerService {
 
     public List<Player> getAll() {
         return playerRepository.findAll();
-    }
-
-    public Player getById(UUID id) {
-        return playerRepository.findById(id).orElse(null);
     }
 
     public Player getFirst() {

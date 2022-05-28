@@ -21,8 +21,4 @@ public class ScoreService {
     public void addToPlayer(UUID playerId, Score score) {
         scoreRepository.addToPlayer(playerId, score);
     }
-
-    public int getTotalForPlayer(UUID playerId) {
-        return getAllForPlayer(playerId).stream().map(Score::toInt).reduce(0, Integer::sum);
-    }
 }

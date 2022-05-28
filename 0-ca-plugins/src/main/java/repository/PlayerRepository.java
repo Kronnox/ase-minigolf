@@ -21,11 +21,6 @@ public class PlayerRepository implements IPlayerRepository {
     }
 
     @Override
-    public Optional<Player> findById(UUID id) {
-        return players.stream().filter(p -> p.getId().equals(id)).findAny();
-    }
-
-    @Override
     public void save(Player player) {
         players.add(player);
     }
