@@ -41,18 +41,18 @@ public class Leaderboard {
     }
 
     public void print() {
-        printLeaderboardRow(app.getSession().getCurrentCourse());
-        new PlayerRepository().findAll().forEach(this::printLeaderboardRow);
+        printLeaderboardRowFor(app.getSession().getCurrentCourse());
+        new PlayerRepository().findAll().forEach(this::printLeaderboardRowFor);
     }
 
-    private void printLeaderboardRow(Course course) {
+    private void printLeaderboardRowFor(Course course) {
         printLeaderboardRow(
                 "(Par)",
                 course.getTracks().stream().map(Track::getPar).map(StrokeCount::toInt).toList()
         );
     }
 
-    private void printLeaderboardRow(Player player) {
+    private void printLeaderboardRowFor(Player player) {
         printLeaderboardRow(
                 player.getName().toString(),
                 app.getScoreService().getAllForPlayer(player).stream().map(Score::toInt).toList()
