@@ -12,9 +12,6 @@ public class Score {
      * @param maxScore the maximum amount of allowed strokes
      */
     public Score(StrokeCount maxScore) {
-        if (maxScore.toInt() < 1) {
-            throw new IllegalArgumentException("The maximum score has to be at least 1");
-        }
         int limit = Integer.MAX_VALUE-2;
         if (maxScore.toInt() > limit) {
             throw new IllegalArgumentException("The maximum score cannot be greater than "+limit);
